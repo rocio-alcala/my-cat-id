@@ -1,0 +1,24 @@
+{
+  "cats": [
+    {
+      "name": "",
+      "raza": "",
+      "sexo": "hembra",
+      "tripleFelina": false,
+      "rabia": false,
+      "VLFe": false,
+      "desparasitado": false,
+      "id": 1
+    },
+    {
+      "name": "",
+      "raza": "",
+      "sexo": "hembra",
+      "tripleFelina": false,
+      "rabia": false,
+      "VLFe": false,
+      "desparasitado": false,
+      "id": 2
+    }
+  ]
+}
