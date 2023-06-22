@@ -26,7 +26,6 @@ export default async function handlerAddCatForm(
     } else {
       const jsonCats = await fetch("http://localhost:3001/cats");
       const cats = await jsonCats.json();
-      console.log(cats)
       res.status(200).json(cats);
     }
   } catch (err) {

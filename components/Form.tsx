@@ -26,11 +26,8 @@ export default function Form() {
   const isVLFe = watch("VLFe");
   const isDesparasitado = watch("desparasitado");
   const isRabia = watch("rabia");
-  console.log("@errors",errors)
 
   const onSubmit = (data: Cat) => {
-    console.log(data);
-    ///VALIDAR EL FORM
     const JSONcatForm = JSON.stringify(data);
     const options = {
       method: "POST",
