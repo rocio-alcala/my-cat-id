@@ -1,14 +1,15 @@
- export type cat = {
+ export type Cat = {
     name: string;
     raza: string;
-    sexo: string;
-    fechaDeNacimiento?: string;
+    sex: string;
+    birth?: string;
     tripleFelina: boolean;
-    fechaTripleFelina?: string;
+    tripleFelinaDate?: string;
     rabia: boolean;
-    fechaRabia?: string;
+    rabiaDate?: string;
     VLFe: boolean;
-    fechaVLFe?: string;
+    VLFeDate?: string;
     desparasitado: boolean;
-    fechaDesparasitado?: string;
+    desparasitadoDate?: string;
+    id?:string
   }

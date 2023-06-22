@@ -1,26 +1,37 @@
 "use client";
 
-import { useState } from "react";
 import styles from "../styles/form.module.css";
 import { Switch, FormControlLabel } from "@mui/material";
-import { cat } from "@/types";
+import { Cat } from "@/types";
+import { useForm } from "react-hook-form";
+import * as yup from "yup"
+import { yupResolver } from "@hookform/resolvers/yup"
 
-//hook form, validation, handling post, end point get 
+
+// validation
 
 export default function Form() {
-  const [ficha, setFicha] = useState<cat>({
-    name: "",
-    raza: "",
-    sexo: "hembra",
-    tripleFelina: false,
-    rabia: false,
-    VLFe: false,
-    desparasitado: false,
+
+  const catFormSchema = yup.object().shape({
+    name: yup.string().required("Name is requiered").min(3,"Minimal caracters is 3"),
+    sex: yup.string().required("Sex is requiered"),
+    raza: yup.string().required("Raza is requiered"),
+
+  })
+  const { register, handleSubmit, formState: {errors}, watch } = useForm<Cat>({
+    resolver: yupResolver(catFormSchema)
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); ///VALIDAR EL FORM
-    const JSONcatForm = JSON.stringify(ficha);//PUEDE HACER UN PUSH A UN ARRAY DE GATOS? O DEBO ENVIAR A UNA API Y DESPUES HACER UN FETCH???
+  const isTripleFelina = watch("tripleFelina");
+  const isVLFe = watch("VLFe");
+  const isDesparasitado = watch("desparasitado");
+  const isRabia = watch("rabia");
+  console.log("@errors",errors)
+
+  const onSubmit = (data: Cat) => {
+    console.log(data);
+    ///VALIDAR EL FORM
+    const JSONcatForm = JSON.stringify(data);
     const options = {
       method: "POST",
       headers: {
@@ -28,76 +39,62 @@ export default function Form() {
       },
       body: JSONcatForm,
     };
-    fetch("/api/form",options)
+    fetch("/api/cats", options);
   };
 
-  console.log("@ficha", ficha)
-
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
-      <label className={styles.label} htmlFor="nombre">
-        Nombre
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+      <label className={styles.label} htmlFor="name">
+        Name
       </label>
       <input
         className={styles.input}
         type="text"
-        id="nombre"
-        name="nombre"
+        id="name"
         placeholder="Ingresa el nombre de tu gato"
-        value={ficha.name}
-        onChange={(ev) => setFicha({ ...ficha, name: ev.target.value })}
+        {...register("name")}
       ></input>
+        {errors.name && <p className={styles.error}>{errors.name.message}</p>}
       <label className={styles.label} htmlFor="raza">
         Raza
       </label>
       <input
-        onChange={(ev) => setFicha({ ...ficha, raza: ev.target.value })}
         className={styles.input}
         placeholder="Ingresa raza de tu gato"
         type="text"
         id="raza"
-        name="raza"
-        value={ficha.raza}
+        {...register("raza")}
       ></input>
-      <label className={styles.label} htmlFor="sexo">
-        Sexo
+      {errors.raza && <p className={styles.error}>{errors.raza.message}</p>}
+      <label className={styles.label} htmlFor="sex">
+        Sex
       </label>
-      <select
-        onChange={(ev) => setFicha({ ...ficha, sexo: ev.target.value })}
-        className={styles.input}
-        id="sexo"
-        name="sexo"
-        value={ficha.sexo}
-      >
+      <select className={styles.input} id="sex" {...register("sex")}>
         <option value="macho">Macho</option>
         <option value="hembra">Hembra</option>
       </select>
-      <label className={styles.label} htmlFor="fecha de nacimiento">
-        Fecha de nacimiento
+      {errors.sex && <p className={styles.error}>{errors.sex.message}</p>}
+      <label className={styles.label} htmlFor="birth">
+        Birth
       </label>
       <input
         className={styles.input}
         type="date"
-        id="fecha de nacimiento"
-        name="fecha de nacimiento"
-        onChange={(ev) =>
-          setFicha({ ...ficha, fechaDeNacimiento: ev.target.value })
-        }
+        id="birth"
+        {...register("birth")}
       ></input>
       <FormControlLabel
         className={styles.label}
         control={
           <Switch
-            name="gilad"
+            id="tripleFelina"
             color="warning"
-            onChange={() =>
-              setFicha({ ...ficha, tripleFelina: !ficha.tripleFelina })
-            }
+            {...register("tripleFelina")}
           />
         }
-        label="Vacuna Triple felina"
+        label="tripleFelina"
       />
-      {ficha.tripleFelina ? (
+      {isTripleFelina ? (
         <>
           <label
             className={styles.label}
@@ -108,26 +105,17 @@ export default function Form() {
           <input
             className={styles.input}
             type="date"
-            id="fecha de vacunacion tripleFelina"
-            name="fecha de vacunacion tripleFelina"
-            onChange={(ev) =>
-              setFicha({ ...ficha, fechaTripleFelina: ev.target.value })
-            }
+            id="tripleFelinaDate"
+            {...register("tripleFelinaDate")}
           ></input>
         </>
       ) : null}
       <FormControlLabel
         className={styles.label}
-        control={
-          <Switch
-            name="gilad"
-            color="warning"
-            onChange={() => setFicha({ ...ficha, rabia: !ficha.rabia })}
-          />
-        }
-        label="Vacuna rabia"
+        control={<Switch id="rabia" color="warning" {...register("rabia")} />}
+        label="rabia"
       />
-      {ficha.rabia ? (
+      {isRabia ? (
         <>
           <label className={styles.label} htmlFor="fecha de vacunacion rabia">
             Fecha de vacunacion - Rabia
@@ -135,26 +123,17 @@ export default function Form() {
           <input
             className={styles.input}
             type="date"
-            id="fecha de vacunacion rabia"
-            name="fecha de vacunacion rabia"
-            onChange={(ev) =>
-              setFicha({ ...ficha, fechaRabia: ev.target.value })
-            }
+            id="rabiaDate"
+            {...register("rabiaDate")}
           ></input>
         </>
       ) : null}
       <FormControlLabel
         className={styles.label}
-        control={
-          <Switch
-            name="gilad"
-            color="warning"
-            onChange={() => setFicha({ ...ficha, VLFe: !ficha.VLFe })}
-          />
-        }
-        label="Vacunado con VLFe"
+        control={<Switch id="VLFe" color="warning" {...register("VLFe")} />}
+        label="VLFe"
       />
-      {ficha.VLFe ? (
+      {isVLFe ? (
         <>
           <label className={styles.label} htmlFor="fecha de vacunacion VLFe">
             Fecha de vacunacion - VLFe
@@ -162,11 +141,8 @@ export default function Form() {
           <input
             className={styles.input}
             type="date"
-            id="fecha de vacunacion VLFe"
-            name="fecha de vacunacion VLFe"
-            onChange={(ev) =>
-              setFicha({ ...ficha, fechaVLFe: ev.target.value })
-            }
+            id="VLFeDate"
+            {...register("VLFeDate")}
           ></input>
         </>
       ) : null}
@@ -174,16 +150,14 @@ export default function Form() {
         className={styles.label}
         control={
           <Switch
-            name="gilad"
+            id="desparasitado"
             color="warning"
-            onChange={() =>
-              setFicha({ ...ficha, desparasitado: !ficha.desparasitado })
-            }
+            {...register("desparasitado")}
           />
         }
-        label="Desparasitado"
+        label="desparasitado"
       />
-      {ficha.desparasitado ? (
+      {isDesparasitado ? (
         <>
           <label className={styles.label} htmlFor="fecha de desparasitacion">
             Fecha de ultima desparasitacion
@@ -191,11 +165,8 @@ export default function Form() {
           <input
             className={styles.input}
             type="date"
-            id="fecha de desparasitacion"
-            name="fecha de desparasitacion"
-            onChange={(ev) =>
-              setFicha({ ...ficha, fechaDesparasitado: ev.target.value })
-            }
+            id="desparasitadoDate"
+            {...register("desparasitadoDate")}
           ></input>
         </>
       ) : null}

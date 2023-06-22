@@ -1,14 +1,21 @@
 "use client"
 
 import Card from "@/components/Card";
-import { cat } from "@/types";
+import { Cat } from "@/types";
+
+//se re renderiza en loop cuando accedo a la pagina desde esa ruta
 
 export default async function MyCat() {
 
-  const jsonCats = await fetch("http://localhost:3001/cats")
-  const myCats:[cat] =  await jsonCats.json()
-  
-console.log("@mycats", myCats);
+  const jsonCats = await fetch("/api/cats");
+  const myCats: Cat[] = await jsonCats.json();
 
-  return <div>{myCats.length>0 ? myCats.map((cat)=><Card cat={cat} key={cat.name}></Card>) : "Todavia no agregaste ningun gato"}</div>;
+
+  return (
+    <div>
+      {myCats.length > 0
+        ? myCats.map((cat) => <Card cat={cat} key={cat.id}></Card>)
+        : "Todavia no agregaste ningun gato"}
+    </div>
+  );
 }
