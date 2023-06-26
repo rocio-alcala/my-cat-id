@@ -4,20 +4,14 @@ import styles from "../styles/form.module.css";
 import { Switch, FormControlLabel } from "@mui/material";
 import { Cat } from "@/types";
 import { useForm } from "react-hook-form";
-import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
+import { catFormSchema } from "@/validations/newCatValidation";
 
 
-// validation
 
 export default function Form() {
 
-  const catFormSchema = yup.object().shape({
-    name: yup.string().required("Name is requiered").min(3,"Minimal caracters is 3"),
-    sex: yup.string().required("Sex is requiered"),
-    raza: yup.string().required("Raza is requiered"),
 
-  })
   const { register, handleSubmit, formState: {errors}, watch } = useForm<Cat>({
     resolver: yupResolver(catFormSchema)
   });
@@ -48,7 +42,7 @@ export default function Form() {
         className={styles.input}
         type="text"
         id="name"
-        placeholder="Ingresa el nombre de tu gato"
+        placeholder="Your cat name"
         {...register("name")}
       ></input>
         {errors.name && <p className={styles.error}>{errors.name.message}</p>}
@@ -67,8 +61,8 @@ export default function Form() {
         Sex
       </label>
       <select className={styles.input} id="sex" {...register("sex")}>
-        <option value="macho">Macho</option>
-        <option value="hembra">Hembra</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
       </select>
       {errors.sex && <p className={styles.error}>{errors.sex.message}</p>}
       <label className={styles.label} htmlFor="birth">

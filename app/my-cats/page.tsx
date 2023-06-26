@@ -15,7 +15,7 @@ export default async function MyCat() {
     <div>
       {myCats.length > 0
         ? myCats.map((cat) => <Card cat={cat} key={cat.id}></Card>)
-        : "Todavia no agregaste ningun gato"}
+        : "No cats found"}
     </div>
   );
 }
