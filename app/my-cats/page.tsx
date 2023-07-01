@@ -2,6 +2,7 @@
 
 import Card from "@/components/Card";
 import { Cat } from "@/types";
+import styles from "../../styles/card.module.css";
 
 //se re renderiza en loop cuando accedo a la pagina desde esa ruta
 
@@ -12,10 +13,10 @@ export default async function MyCat() {
 
 
   return (
-    <div>
+    <div className={styles.container} >
       {myCats.length > 0
         ? myCats.map((cat) => <Card cat={cat} key={cat.id}></Card>)
-        : "No cats found"}
+        : <p>No cats found</p>}
     </div>
   );
 }

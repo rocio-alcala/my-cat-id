@@ -1,0 +1,18 @@
+.container {
+    position: relative;
+    height: 25rem;
+    width: 25rem;
+    display: inline;
+}
+
+.my{ position: absolute; top: -4rem; left: 4rem; font-size: 6rem;}
+
+.cat{ position: absolute; font-size: 8rem; left:2.5rem; top: -2.8rem;}
+
+.id{position: absolute; font-size: 11rem; top: 0.5rem; left: 4rem;}
+
+.description{position: absolute; top: 20rem; left: 5rem;}
+
+.flex {  display: flex;
+    justify-content: center;
+    align-items: center;}

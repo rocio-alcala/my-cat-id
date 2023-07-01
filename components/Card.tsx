@@ -1,6 +1,8 @@
+import styles from "../styles/card.module.css";
+
 function Card({cat}) {
     return (
-      <div>
+      <div className={styles.card}>
         <h1>{cat.name}</h1>
         <p>Fecha de nacimiento: {cat.fechaDeNacimiento}</p>
         <p>Sexo: {cat.sexo}</p>
