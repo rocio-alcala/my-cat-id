@@ -59,7 +59,7 @@ export default function Form() {
         placeholder="Your cat name"
         {...register("name")}
       ></input>
-        {errors.name && <p className={styles.error}>{errors.name.message}</p>}
+      {errors.name && <p className={styles.error}>{errors.name.message}</p>}
       <label className={styles.label} htmlFor="raza">
         Raza
       </label>
