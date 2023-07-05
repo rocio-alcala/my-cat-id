@@ -4,22 +4,29 @@ import styles from "../styles/form.module.css";
 import { Switch, FormControlLabel } from "@mui/material";
 import { Cat } from "@/types";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup"
+import { yupResolver } from "@hookform/resolvers/yup";
 import { catFormSchema } from "@/validations/newCatValidation";
-
-
+import { useState } from "react";
+import Modal from "./Modal";
 
 export default function Form() {
-
-
-  const { register, handleSubmit, formState: {errors}, watch } = useForm<Cat>({
-    resolver: yupResolver(catFormSchema)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    reset,
+  } = useForm<Cat>({
+    resolver: yupResolver(catFormSchema),
   });
 
+  const name = watch("name");
   const isTripleFelina = watch("tripleFelina");
   const isVLFe = watch("VLFe");
   const isDesparasitado = watch("desparasitado");
   const isRabia = watch("rabia");
+  const [openSubmitCatModal, setOpenSubmitCatModal] = useState(false);
+  const [openErrorCatModal, setOpenErrorCatModal] = useState(false);
 
   const onSubmit = (data: Cat) => {
     const JSONcatForm = JSON.stringify(data);
@@ -30,7 +37,14 @@ export default function Form() {
       },
       body: JSONcatForm,
     };
-    fetch("/api/cats", options);
+    const post = fetch("/api/cats", options).then((resp) => {
+      if (resp.ok) {
+        reset();
+        setOpenSubmitCatModal(true);
+      } else {
+        setOpenErrorCatModal(true);
+      }
+    });
   };
 
   return (
@@ -171,6 +185,16 @@ export default function Form() {
       <button className={styles.button} type="submit">
         Enviar
       </button>
+      <Modal
+        open={openSubmitCatModal}
+        setOpen={setOpenSubmitCatModal}
+        content={"You add a new cat to your cats"}
+      ></Modal>
+      <Modal
+        open={openErrorCatModal}
+        setOpen={setOpenErrorCatModal}
+        content={"There was a problem adding your cat, try again"}
+      ></Modal>
     </form>
   );
 }
