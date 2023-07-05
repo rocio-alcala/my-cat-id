@@ -8,12 +8,16 @@ import { useEffect, useState } from "react";
 
 
 export default function MyCat() {
+  const [myCats, setMyCats] = useState<Cat[]>([]);
 
-
-  const jsonCats = await fetch("/api/cats");
-  const myCats: Cat[] = await jsonCats.json();
-
-
+  useEffect(() => {
+    async function fetchCats() {
+      const jsonCats = await fetch("/api/cats");
+      const myCats: Cat[] = await jsonCats.json();
+      setMyCats(myCats);
+    }
+    fetchCats();
+  }, []);
   return (
    <div className={styles.cardcontainer}>
       {myCats.length > 0 ? (
