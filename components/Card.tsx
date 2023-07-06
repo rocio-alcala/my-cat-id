@@ -1,44 +1,45 @@
 import styles from "../styles/card.module.css";
 import { Cat } from "@/types";
 
-type CardTypes = { cat: Cat };
+type CardProps = { cat: Cat };
 
-function Card({ cat }: CardTypes) {
-  function getNextVaccineDate(vaccineDate: string, periodicity: string) {
-    const initialDate: Date = new Date(vaccineDate);
-    let newDate: string;
-    switch (periodicity) {
-      case "annual":
-        newDate = new Date(
-          initialDate.getFullYear() + 1,
-          initialDate.getMonth(),
-          initialDate.getDate() + 1
-        ).toLocaleDateString();
-        return newDate;
-      case "monthly":
-        newDate = new Date(
-          initialDate.getFullYear(),
-          initialDate.getMonth() + 1,
-          initialDate.getDate() + 1
-        ).toLocaleDateString();
-        return newDate;
-    }
+function getNextVaccineDate(vaccineDate: string, periodicity: string) {
+  const initialDate: Date = new Date(vaccineDate);
+  let newDate: string;
+  switch (periodicity) {
+    case "annual":
+      newDate = new Date(
+        initialDate.getFullYear() + 1,
+        initialDate.getMonth(),
+        initialDate.getDate() + 1
+      ).toLocaleDateString();
+      return newDate;
+    case "monthly":
+      newDate = new Date(
+        initialDate.getFullYear(),
+        initialDate.getMonth() + 1,
+        initialDate.getDate() + 1
+      ).toLocaleDateString();
+      return newDate;
   }
+}
 
-  function getAge(birth: string) {
-    const actualDate = new Date();
-    const birthDate = new Date(birth);
-    let age = actualDate.getFullYear() - birthDate.getFullYear();
-    if (actualDate.getMonth() < birthDate.getMonth()) {
+function getAge(birth: string) {
+  const actualDate = new Date();
+  const birthDate = new Date(birth);
+  let age = actualDate.getFullYear() - birthDate.getFullYear();
+  if (actualDate.getMonth() < birthDate.getMonth()) {
+    age = age - 1;
+  } else if (actualDate.getMonth() === birthDate.getMonth()) {
+    if (actualDate.getDate() < birthDate.getDate() + 1) {
       age = age - 1;
-    } else if (actualDate.getMonth() === birthDate.getMonth()) {
-      if (actualDate.getDate() < birthDate.getDate() + 1) {
-        age = age - 1;
-      }
     }
-    return age;
   }
+  return age;
+}
 
+function Card({ cat }: CardProps) {
+  
   return (
     <div className={styles.card}>
       <h1>{cat.name}</h1>

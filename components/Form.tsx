@@ -188,7 +188,7 @@ export default function Form() {
       <Modal
         open={openSubmitCatModal}
         setOpen={setOpenSubmitCatModal}
-        content={"You add a new cat to your cats"}
+        content={"You added a new cat to your cats"}
       ></Modal>
       <Modal
         open={openErrorCatModal}
