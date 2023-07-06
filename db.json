@@ -1,24 +1,26 @@
 {
   "cats": [
     {
-      "name": "",
+      "name": "mOMI",
       "raza": "",
-      "sexo": "hembra",
+      "sex": "macho",
+      "birth": "",
       "tripleFelina": false,
       "rabia": false,
       "VLFe": false,
       "desparasitado": false,
-      "id": 1
+      "id": "mOMI"
     },
     {
-      "name": "",
+      "name": "titi",
       "raza": "",
-      "sexo": "hembra",
+      "sex": "macho",
+      "birth": "",
       "tripleFelina": false,
       "rabia": false,
       "VLFe": false,
       "desparasitado": false,
-      "id": 2
+      "id": "titi"
     }
   ]
 }

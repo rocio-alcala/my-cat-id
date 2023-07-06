@@ -1,14 +1,36 @@
-"use client"
+"use client";
 
 import Card from "@/components/Card";
-import { cat } from "@/types";
+import { Cat } from "@/types";
+import styles from "../../styles/card.module.css";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
-export default async function MyCat() {
 
-  const jsonCats = await fetch("http://localhost:3001/cats")
-  const myCats:[cat] =  await jsonCats.json()
-  
-console.log("@mycats", myCats);
+export default function MyCat() {
+  const [myCats, setMyCats] = useState<Cat[]>([]);
 
-  return <div>{myCats.length>0 ? myCats.map((cat)=><Card cat={cat} key={cat.name}></Card>) : "Todavia no agregaste ningun gato"}</div>;
+  useEffect(() => {
+    async function fetchCats() {
+      const jsonCats = await fetch("/api/cats");
+      const myCats: Cat[] = await jsonCats.json();
+      setMyCats(myCats);
+    }
+    fetchCats();
+  }, []);
+  return (
+   <div className={styles.cardcontainer}>
+      {myCats.length > 0 ? (
+        myCats.map((cat) => <Card cat={cat} key={cat.id}></Card>)
+      ) : (
+        <div className={styles.container}>
+          <h1 className={styles.nocats}>No cats found</h1>
+          <p className={styles.nocats}>You can add your cats </p>
+          <div className={styles.nocats}>
+            <Link href="/add-cat">here</Link>
+          </div>
+        </div>
+      )}
+   </div>
+  );
 }
