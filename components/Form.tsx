@@ -21,10 +21,10 @@ export default function Form() {
   });
 
   const name = watch("name");
-  const isTripleFelina = watch("tripleFelina");
+  const isTripleFeline = watch("tripleFeline");
   const isVLFe = watch("VLFe");
-  const isdewormed = watch("dewormed");
-  const isRabia = watch("rabia");
+  const isDewormed = watch("dewormed");
+  const isRabies = watch("rabies");
   const [openSubmitCatModal, setOpenSubmitCatModal] = useState(false);
   const [openErrorCatModal, setOpenErrorCatModal] = useState(false);
 
@@ -92,56 +92,56 @@ export default function Form() {
         className={styles.label}
         control={
           <Switch
-            id="tripleFelina"
+            id="tripleFeline"
             color="warning"
-            {...register("tripleFelina")}
+            {...register("tripleFeline")}
           />
         }
-        label="tripleFelina"
+        label="Triple filene vaccine"
       />
-      {isTripleFelina ? (
+      {isTripleFeline ? (
         <>
           <label
             className={styles.label}
-            htmlFor="fecha de vacunacion tripleFelina"
+            htmlFor="tripleFelineDate"
           >
-            Fecha de vacunacion - Triple felina
+            Last triple filene vaccine date 
           </label>
           <input
             className={styles.input}
             type="date"
-            id="tripleFelinaDate"
-            {...register("tripleFelinaDate")}
+            id="tripleFelineDate"
+            {...register("tripleFelineDate")}
           ></input>
         </>
       ) : null}
       <FormControlLabel
         className={styles.label}
-        control={<Switch id="rabia" color="warning" {...register("rabia")} />}
-        label="rabia"
+        control={<Switch id="rabies" color="warning" {...register("rabies")} />}
+        label="Rabies vaccine"
       />
-      {isRabia ? (
+      {isRabies ? (
         <>
-          <label className={styles.label} htmlFor="fecha de vacunacion rabia">
-            Fecha de vacunacion - Rabia
+          <label className={styles.label} htmlFor="rabiesDate">
+          Last rabies vaccine date 
           </label>
           <input
             className={styles.input}
             type="date"
-            id="rabiaDate"
-            {...register("rabiaDate")}
+            id="rabiesDate"
+            {...register("rabiesDate")}
           ></input>
         </>
       ) : null}
       <FormControlLabel
         className={styles.label}
         control={<Switch id="VLFe" color="warning" {...register("VLFe")} />}
-        label="VLFe"
+        label="VLFe vaccine"
       />
       {isVLFe ? (
         <>
-          <label className={styles.label} htmlFor="fecha de vacunacion VLFe">
-            Fecha de vacunacion - VLFe
+          <label className={styles.label} htmlFor="VLFeDate">
+          Last VLFe vaccine date 
           </label>
           <input
             className={styles.input}
@@ -160,12 +160,12 @@ export default function Form() {
             {...register("dewormed")}
           />
         }
-        label="dewormed"
+        label="Dewormed"
       />
-      {isdewormed ? (
+      {isDewormed ? (
         <>
-          <label className={styles.label} htmlFor="fecha de desparasitacion">
-            Fecha de ultima desparasitacion
+          <label className={styles.label} htmlFor="dewormedDate">
+            Last dewormed date
           </label>
           <input
             className={styles.input}
@@ -183,7 +183,7 @@ export default function Form() {
         accept="image/*"
       />
       <button className={styles.button} type="submit">
-        Enviar
+        Submit
       </button>
       <Modal
         open={openSubmitCatModal}

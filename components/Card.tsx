@@ -24,7 +24,7 @@ function Card({ cat }: CardTypes) {
         return newDate;
     }
   }
-  
+
   function getAge(birth: string) {
     const actualDate = new Date();
     const birthDate = new Date(birth);
@@ -49,20 +49,20 @@ function Card({ cat }: CardTypes) {
         </p>
       )}
       <p>Sex: {cat.sex}</p>
-      <p>Rabies vaccine: {cat.rabia ? "Yes" : "No"}</p>
-      {cat.rabiaDate ? (
+      <p>Rabies vaccine: {cat.rabies ? "Yes" : "No"}</p>
+      {cat.rabiesDate ? (
         <p>
           {cat.name} next rabies vaccine is due for{" "}
-          {getNextVaccineDate(cat.rabiaDate, "annual")}
+          {getNextVaccineDate(cat.rabiesDate, "annual")}
         </p>
       ) : (
         <p>{cat.name} should get the rabies vaccine</p>
       )}
-      <p>Triple feline vaccine: {cat.tripleFelina ? "Yes" : "No"}</p>
-      {cat.tripleFelinaDate ? (
+      <p>Triple feline vaccine: {cat.tripleFeline ? "Yes" : "No"}</p>
+      {cat.tripleFelineDate ? (
         <p>
           {cat.name} next triple feline vaccine is due for{" "}
-          {getNextVaccineDate(cat.tripleFelinaDate, "annual")}
+          {getNextVaccineDate(cat.tripleFelineDate, "annual")}
         </p>
       ) : (
         <p>{cat.name} should get the triple feline vaccine</p>
