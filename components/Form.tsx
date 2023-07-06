@@ -23,7 +23,7 @@ export default function Form() {
   const name = watch("name");
   const isTripleFelina = watch("tripleFelina");
   const isVLFe = watch("VLFe");
-  const isDesparasitado = watch("desparasitado");
+  const isdewormed = watch("dewormed");
   const isRabia = watch("rabia");
   const [openSubmitCatModal, setOpenSubmitCatModal] = useState(false);
   const [openErrorCatModal, setOpenErrorCatModal] = useState(false);
@@ -60,17 +60,17 @@ export default function Form() {
         {...register("name")}
       ></input>
       {errors.name && <p className={styles.error}>{errors.name.message}</p>}
-      <label className={styles.label} htmlFor="raza">
-        Raza
+      <label className={styles.label} htmlFor="color">
+        Color
       </label>
       <input
         className={styles.input}
-        placeholder="Ingresa raza de tu gato"
+        placeholder="What color is your cat"
         type="text"
-        id="raza"
-        {...register("raza")}
+        id="color"
+        {...register("color")}
       ></input>
-      {errors.raza && <p className={styles.error}>{errors.raza.message}</p>}
+      {errors.color && <p className={styles.error}>{errors.color.message}</p>}
       <label className={styles.label} htmlFor="sex">
         Sex
       </label>
@@ -155,14 +155,14 @@ export default function Form() {
         className={styles.label}
         control={
           <Switch
-            id="desparasitado"
+            id="dewormed"
             color="warning"
-            {...register("desparasitado")}
+            {...register("dewormed")}
           />
         }
-        label="desparasitado"
+        label="dewormed"
       />
-      {isDesparasitado ? (
+      {isdewormed ? (
         <>
           <label className={styles.label} htmlFor="fecha de desparasitacion">
             Fecha de ultima desparasitacion
@@ -170,8 +170,8 @@ export default function Form() {
           <input
             className={styles.input}
             type="date"
-            id="desparasitadoDate"
-            {...register("desparasitadoDate")}
+            id="dewormedDate"
+            {...register("dewormedDate")}
           ></input>
         </>
       ) : null}

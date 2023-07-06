@@ -1,6 +1,6 @@
  export type Cat = {
     name: string;
-    raza: string;
+    color: string;
     sex: string;
     birth?: string;
     tripleFelina: boolean;
@@ -9,7 +9,7 @@
     rabiaDate?: string;
     VLFe: boolean;
     VLFeDate?: string;
-    desparasitado: boolean;
-    desparasitadoDate?: string;
+    dewormed: boolean;
+    dewormedDate?: string;
     id?:string
   }
