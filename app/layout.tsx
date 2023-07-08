@@ -11,7 +11,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
+const metadata = {
   title: "My cat id",
   description: "The app for your cat info inline",
 };
