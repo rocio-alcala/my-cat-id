@@ -1,3 +1,4 @@
+import { addMonths, addYears } from "date-fns";
 import styles from "../styles/card.module.css";
 import { Cat, Periodicity, Vaccine, getVaccinePeriodicity } from "@/types";
 
@@ -5,23 +6,13 @@ type CardTypes = { cat: Cat };
 
 export function getNextVaccineDate(vaccine: Vaccine, vaccineDate: string) {
   const periodicity = getVaccinePeriodicity(vaccine);
-  const initialDate: Date = new Date(vaccineDate);
-  let newDate: string;
+  const initialDate = new Date(vaccineDate);
+
   switch (periodicity) {
     case Periodicity.ANNUAL:
-      newDate = new Date( // to-do: implement date-fns
-        initialDate.getFullYear() + 1,
-        initialDate.getMonth(),
-        initialDate.getDate() + 1
-      ).toLocaleDateString();
-      return newDate;
+      return addYears(initialDate, 1).toLocaleDateString();
     case Periodicity.MONTHLY:
-      newDate = new Date(
-        initialDate.getFullYear(),
-        initialDate.getMonth() + 1,
-        initialDate.getDate() + 1
-      ).toLocaleDateString();
-      return newDate;
+      return addMonths(initialDate, 1).toLocaleDateString();
   }
 }
 
