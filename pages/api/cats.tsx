@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { uuid } from 'uuidv4';
+import { v4 } from "uuid";
 
 //para proxima clase errores
 
@@ -10,7 +10,7 @@ export default async function handlerAddCatForm(
   try {
     switch (req.method) {
       case "POST":
-        const newCat = { ...req.body, id: uuid() };
+        const newCat = { ...req.body, id: v4() };
 
         const options = {
           method: "POST",
@@ -31,7 +31,7 @@ export default async function handlerAddCatForm(
         const jsonCats = await fetch("http://localhost:3001/cats");
         const cats = await jsonCats.json();
         if (jsonCats.ok) {
-          res.status(200).json(cats); 
+          res.status(200).json(cats);
         } else {
           throw new Error("Error fetching cats");
         }
