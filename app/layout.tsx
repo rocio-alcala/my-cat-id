@@ -38,19 +38,19 @@ export default function RootLayout({
               <Link href="/">
                 <Button variant="text" color={"primary"}>
                   <BiHomeAlt size={20} />
-                   Home
+                  Home
                 </Button>
               </Link>
               <Link href="/add-cat">
                 <Button variant="text">
                   <BiMessageAltAdd size={20} />
-                   Add cat
+                  Add cat
                 </Button>
               </Link>
               <Link href="/my-cats">
                 <Button variant="text">
                   <BiSolidCat size={20} />
-                   My cats
+                  My cats
                 </Button>
               </Link>
             </Stack>
