@@ -1,5 +1,5 @@
 export type Cat = {
-  id?: string; // to-do: make mandatory
+  id: string;
   name: string;
   color: string;
   sex: string;

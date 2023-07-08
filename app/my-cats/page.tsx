@@ -6,7 +6,6 @@ import styles from "../../styles/card.module.css";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-
 export default function MyCat() {
   const [myCats, setMyCats] = useState<Cat[]>([]);
 
@@ -18,8 +17,9 @@ export default function MyCat() {
     }
     fetchCats();
   }, []);
+
   return (
-   <div className={styles.cardcontainer}>
+    <div className={styles.cardcontainer}>
       {myCats.length > 0 ? (
         myCats.map((cat) => <Card cat={cat} key={cat.id}></Card>)
       ) : (
@@ -31,6 +31,6 @@ export default function MyCat() {
           </div>
         </div>
       )}
-   </div>
+    </div>
   );
 }
