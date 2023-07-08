@@ -2,9 +2,9 @@ import { addMonths, addYears } from "date-fns";
 import styles from "../styles/card.module.css";
 import { Cat, Periodicity, Vaccine, getVaccinePeriodicity } from "@/types";
 
-type CardTypes = { cat: Cat };
+type CardProps = { cat: Cat };
 
-export function getNextVaccineDate(vaccine: Vaccine, vaccineDate: string) {
+function getNextVaccineDate(vaccine: Vaccine, vaccineDate: string) {
   const periodicity = getVaccinePeriodicity(vaccine);
   const initialDate = new Date(vaccineDate);
 
@@ -16,21 +16,22 @@ export function getNextVaccineDate(vaccine: Vaccine, vaccineDate: string) {
   }
 }
 
-function Card({ cat }: CardTypes) {
-  function getAge(birth: string) {
-    const actualDate = new Date();
-    const birthDate = new Date(birth);
-    let age = actualDate.getFullYear() - birthDate.getFullYear();
-    if (actualDate.getMonth() < birthDate.getMonth()) {
+function getAge(birth: string) {
+  // to-do: implement date-fns
+  const actualDate = new Date();
+  const birthDate = new Date(birth);
+  let age = actualDate.getFullYear() - birthDate.getFullYear();
+  if (actualDate.getMonth() < birthDate.getMonth()) {
+    age = age - 1;
+  } else if (actualDate.getMonth() === birthDate.getMonth()) {
+    if (actualDate.getDate() < birthDate.getDate() + 1) {
       age = age - 1;
-    } else if (actualDate.getMonth() === birthDate.getMonth()) {
-      if (actualDate.getDate() < birthDate.getDate() + 1) {
-        age = age - 1;
-      }
     }
-    return age;
   }
+  return age;
+}
 
+function Card({ cat }: CardProps) {
   return (
     <div className={styles.card}>
       <h1>{cat.name}</h1>
