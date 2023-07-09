@@ -16,7 +16,7 @@ export default function Form() {
     formState: { errors },
     watch,
     reset,
-  } = useForm<Cat>({
+  } = useForm<Omit<Cat, "id">>({
     resolver: yupResolver(catFormSchema),
   });
 
@@ -28,7 +28,7 @@ export default function Form() {
   const [openSubmitCatModal, setOpenSubmitCatModal] = useState(false);
   const [openErrorCatModal, setOpenErrorCatModal] = useState(false);
 
-  const onSubmit = (data: Cat) => {
+  const onSubmit = (data: Omit<Cat, "id">) => {
     const JSONcatForm = JSON.stringify(data);
     const options = {
       method: "POST",
@@ -101,11 +101,8 @@ export default function Form() {
       />
       {isTripleFeline ? (
         <>
-          <label
-            className={styles.label}
-            htmlFor="tripleFelineDate"
-          >
-            Last triple filene vaccine date 
+          <label className={styles.label} htmlFor="tripleFelineDate">
+            Last triple filene vaccine date
           </label>
           <input
             className={styles.input}
@@ -123,7 +120,7 @@ export default function Form() {
       {isRabies ? (
         <>
           <label className={styles.label} htmlFor="rabiesDate">
-          Last rabies vaccine date 
+            Last rabies vaccine date
           </label>
           <input
             className={styles.input}
@@ -141,7 +138,7 @@ export default function Form() {
       {isVLFe ? (
         <>
           <label className={styles.label} htmlFor="VLFeDate">
-          Last VLFe vaccine date 
+            Last VLFe vaccine date
           </label>
           <input
             className={styles.input}
@@ -154,11 +151,7 @@ export default function Form() {
       <FormControlLabel
         className={styles.label}
         control={
-          <Switch
-            id="dewormed"
-            color="warning"
-            {...register("dewormed")}
-          />
+          <Switch id="dewormed" color="warning" {...register("dewormed")} />
         }
         label="Dewormed"
       />

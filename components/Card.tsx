@@ -1,30 +1,23 @@
+import { addMonths, addYears } from "date-fns";
 import styles from "../styles/card.module.css";
-import { Cat } from "@/types";
+import { Cat, Periodicity, Vaccine, getVaccinePeriodicity } from "@/types";
 
 type CardProps = { cat: Cat };
 
-function getNextVaccineDate(vaccineDate: string, periodicity: string) {
-  const initialDate: Date = new Date(vaccineDate);
-  let newDate: string;
+function getNextVaccineDate(vaccine: Vaccine, vaccineDate: string) {
+  const periodicity = getVaccinePeriodicity(vaccine);
+  const initialDate = new Date(vaccineDate);
+
   switch (periodicity) {
-    case "annual":
-      newDate = new Date(
-        initialDate.getFullYear() + 1,
-        initialDate.getMonth(),
-        initialDate.getDate() + 1
-      ).toLocaleDateString();
-      return newDate;
-    case "monthly":
-      newDate = new Date(
-        initialDate.getFullYear(),
-        initialDate.getMonth() + 1,
-        initialDate.getDate() + 1
-      ).toLocaleDateString();
-      return newDate;
+    case Periodicity.ANNUAL:
+      return addYears(initialDate, 1).toLocaleDateString();
+    case Periodicity.MONTHLY:
+      return addMonths(initialDate, 1).toLocaleDateString();
   }
 }
 
 function getAge(birth: string) {
+  // to-do: implement date-fns
   const actualDate = new Date();
   const birthDate = new Date(birth);
   let age = actualDate.getFullYear() - birthDate.getFullYear();
@@ -57,7 +50,7 @@ function Card({ cat }: CardProps) {
         {cat.rabiesDate ? (
           <p>
             {cat.name} next rabies vaccine is due for{" "}
-            {getNextVaccineDate(cat.rabiesDate, "annual")}
+            {getNextVaccineDate(Vaccine.RABIES, cat.rabiesDate)}
           </p>
         ) : (
           <p>{cat.name} should get the rabies vaccine</p>
@@ -68,7 +61,7 @@ function Card({ cat }: CardProps) {
         {cat.tripleFelineDate ? (
           <p>
             {cat.name} next triple feline vaccine is due for{" "}
-            {getNextVaccineDate(cat.tripleFelineDate, "annual")}
+            {getNextVaccineDate(Vaccine.TRIPLE_FELINE, cat.tripleFelineDate)}
           </p>
         ) : (
           <p>{cat.name} should get the triple feline vaccine</p>
@@ -79,7 +72,7 @@ function Card({ cat }: CardProps) {
         {cat.VLFeDate ? (
           <p>
             {cat.name} next VLFe vaccine is due for{" "}
-            {getNextVaccineDate(cat.VLFeDate, "annual")}
+            {getNextVaccineDate(Vaccine.VLFe, cat.VLFeDate)}
           </p>
         ) : (
           <p>{cat.name} should get the VLFe vaccine</p>
@@ -90,7 +83,7 @@ function Card({ cat }: CardProps) {
         {cat.dewormedDate ? (
           <p>
             {cat.name} next deworm is due for{" "}
-            {getNextVaccineDate(cat.dewormedDate, "monthly")}
+            {getNextVaccineDate(Vaccine.DEWORMED, cat.dewormedDate)}
           </p>
         ) : (
           <p>{cat.name} should be deworm</p>
