@@ -1,5 +1,5 @@
 .card {
-  width: 18rem;
+  width: 20rem;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -11,6 +11,10 @@
   font-size: 2rem;
 
 }
+
+.cardItem { padding: 0.1rem; font-size: 0.8rem;}
+
+.cardItemTitle { padding: 0.1rem; font-size: 2rem;}
 
 .container {
   display: flex;
