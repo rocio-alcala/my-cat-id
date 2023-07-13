@@ -12,14 +12,14 @@ export default async function handlerAddCatForm(
       case "POST":
         const newCat = { ...req.body, id: v4() };
 
-        const options = {
+        const postOptions = {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(newCat),
         };
-        const response = await fetch("http://localhost:3001/cats", options);
+        const response = await fetch("http://localhost:3001/cats", postOptions);
 
         if (response.ok) {
           res.status(200).json({ data: req.body });

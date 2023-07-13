@@ -9,19 +9,21 @@ import { useEffect, useState } from "react";
 export default function MyCat() {
   const [myCats, setMyCats] = useState<Cat[]>([]);
 
+  async function fetchCats() {
+    const jsonCats = await fetch("/api/cats");
+    const myCats: Cat[] = await jsonCats.json();
+    setMyCats(myCats);
+    console.log("@mycats",myCats)
+  }
+
   useEffect(() => {
-    async function fetchCats() {
-      const jsonCats = await fetch("/api/cats");
-      const myCats: Cat[] = await jsonCats.json();
-      setMyCats(myCats);
-    }
     fetchCats();
   }, []);
 
   return (
     <div className={styles.cardcontainer}>
       {myCats.length > 0 ? (
-        myCats.map((cat) => <Card cat={cat} key={cat.id}></Card>)
+        myCats.map((cat) => <Card fetchCat={fetchCats} cat={cat} key={cat.id}></Card>)
       ) : (
         <div className={styles.container}>
           <h1 className={styles.nocats}>No cats found</h1>

@@ -37,7 +37,7 @@ export default function Form() {
       },
       body: JSONcatForm,
     };
-    const post = fetch("/api/cats", options).then((resp) => {
+    fetch("/api/cats", options).then((resp) => {
       if (resp.ok) {
         reset();
         setOpenSubmitCatModal(true);

@@ -1,8 +1,10 @@
-import { addMonths, addYears } from "date-fns";
+import { addMonths, addYears, differenceInYears } from "date-fns";
 import styles from "../styles/card.module.css";
 import { Cat, Periodicity, Vaccine, getVaccinePeriodicity } from "@/types";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-type CardProps = { cat: Cat };
+type CardProps = { cat: Cat; fetchCat: Function };
 
 function getNextVaccineDate(vaccine: Vaccine, vaccineDate: string) {
   const periodicity = getVaccinePeriodicity(vaccine);
@@ -23,7 +25,18 @@ function getAge(birth: string) {
   return age;
 }
 
-function Card({ cat }: CardProps) {
+
+
+function Card({ cat, fetchCat }: CardProps) {
+
+  async function handleDeleteCard(catId: string) {
+    const URL = "http://localhost:3001/cats/" + catId;
+    console.log(URL);
+    const options = { method: "DELETE", body: URL };
+    await fetch(URL, options);
+    fetchCat()
+  }
+
   return (
     <div className={styles.card}>
       <h1 className={styles.cardItemTitle}>{cat.name}</h1>
@@ -80,6 +93,20 @@ function Card({ cat }: CardProps) {
         ) : (
           <p>{cat.name} should be deworm</p>
         )}
+      </div>
+      <div className={styles.cardItem}>
+        <button className={styles.button} type="button">
+          Edit
+        </button>
+        <IconButton
+          onClick={() => {
+            handleDeleteCard(cat.id);;
+          }}
+          aria-label="delete"
+          size="large"
+        >
+          <DeleteIcon />
+        </IconButton>
       </div>
     </div>
   );
