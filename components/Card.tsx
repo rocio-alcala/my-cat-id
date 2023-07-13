@@ -17,17 +17,9 @@ function getNextVaccineDate(vaccine: Vaccine, vaccineDate: string) {
 }
 
 function getAge(birth: string) {
-  // to-do: implement date-fns
   const actualDate = new Date();
   const birthDate = new Date(birth);
-  let age = actualDate.getFullYear() - birthDate.getFullYear();
-  if (actualDate.getMonth() < birthDate.getMonth()) {
-    age = age - 1;
-  } else if (actualDate.getMonth() === birthDate.getMonth()) {
-    if (actualDate.getDate() < birthDate.getDate() + 1) {
-      age = age - 1;
-    }
-  }
+  let age = differenceInYears(actualDate,birthDate)
   return age;
 }
 
