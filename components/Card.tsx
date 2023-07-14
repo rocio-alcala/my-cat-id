@@ -4,7 +4,12 @@ import { Cat, Periodicity, Vaccine, getVaccinePeriodicity } from "@/types";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-type CardProps = { cat: Cat; fetchCat: Function };
+type CardProps = {
+  cat: Cat;
+  fetchCat: Function;
+  setOpenSuccessDeleteCatModal: Function;
+  setOpenErrorDeletingCatModal: Function;
+};
 
 function getNextVaccineDate(vaccine: Vaccine, vaccineDate: string) {
   const periodicity = getVaccinePeriodicity(vaccine);
@@ -21,20 +26,27 @@ function getNextVaccineDate(vaccine: Vaccine, vaccineDate: string) {
 function getAge(birth: string) {
   const actualDate = new Date();
   const birthDate = new Date(birth);
-  let age = differenceInYears(actualDate,birthDate)
+  let age = differenceInYears(actualDate, birthDate);
   return age;
 }
 
-
-
-function Card({ cat, fetchCat }: CardProps) {
-
+function Card({
+  cat,
+  fetchCat,
+  setOpenSuccessDeleteCatModal,
+  setOpenErrorDeletingCatModal,
+}: CardProps) {
   async function handleDeleteCard(catId: string) {
     const URL = "http://localhost:3001/cats/" + catId;
     console.log(URL);
     const options = { method: "DELETE", body: URL };
-    await fetch(URL, options);
-    fetchCat()
+    const deleteCard = await fetch(URL, options);
+    if (deleteCard.ok) {
+      setOpenSuccessDeleteCatModal(true);
+    } else {
+      setOpenErrorDeletingCatModal(true);
+    }
+    fetchCat();
   }
 
   return (
@@ -100,7 +112,7 @@ function Card({ cat, fetchCat }: CardProps) {
         </button>
         <IconButton
           onClick={() => {
-            handleDeleteCard(cat.id);;
+            handleDeleteCard(cat.id);
           }}
           aria-label="delete"
           size="large"
