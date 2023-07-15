@@ -38,7 +38,7 @@ function Card({
 }: CardProps) {
   async function handleDeleteCard(catId: string) {
     const URL = "http://localhost:3001/cats/" + catId;
-    console.log(URL);
+
     const options = { method: "DELETE", body: URL };
     const deleteCard = await fetch(URL, options);
     if (deleteCard.ok) {

@@ -91,7 +91,7 @@ export default function Form() {
       <FormControlLabel
         className={styles.label}
         control={
-          <Switch
+          <Switch //el switch no se resetea cuando envio el form
             id="tripleFeline"
             color="warning"
             {...register("tripleFeline")}

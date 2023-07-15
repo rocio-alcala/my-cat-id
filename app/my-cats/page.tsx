@@ -14,7 +14,6 @@ export default function MyCat() {
     const jsonCats = await fetch("/api/cats");
     const myCats: Cat[] = await jsonCats.json();
     setMyCats(myCats);
-    console.log("@mycats", myCats);
   }
 
   useEffect(() => {
