@@ -37,9 +37,10 @@ function Card({
   setOpenErrorDeletingCatModal,
 }: CardProps) {
   async function handleDeleteCard(catId: string) {
-    const URL = "http://localhost:3001/cats/" + catId;
-
-    const options = { method: "DELETE", body: URL };
+    const URL = "/api/cats/" + catId;
+    const options = {
+      method: "DELETE",
+    };
     const deleteCard = await fetch(URL, options);
     if (deleteCard.ok) {
       setOpenSuccessDeleteCatModal(true);
