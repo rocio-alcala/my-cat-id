@@ -6,8 +6,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 type CardProps = {
   cat: Cat;
-  fetchCat: Function;
-  setOpenSuccessDeleteCatModal: Function;
+  fetchCat: () => void;
+  setOpenSuccessDeleteCatModal: (isModalOpen: boolean) => void;
   setOpenErrorDeletingCatModal: Function;
 };
 
