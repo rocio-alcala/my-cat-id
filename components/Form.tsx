@@ -37,7 +37,7 @@ export default function Form() {
       },
       body: JSONcatForm,
     };
-    const post = fetch("/api/cats", options).then((resp) => {
+    fetch("/api/cats", options).then((resp) => {
       if (resp.ok) {
         reset();
         setOpenSubmitCatModal(true);
@@ -91,7 +91,7 @@ export default function Form() {
       <FormControlLabel
         className={styles.label}
         control={
-          <Switch
+          <Switch //el switch no se resetea cuando envio el form
             id="tripleFeline"
             color="warning"
             {...register("tripleFeline")}
