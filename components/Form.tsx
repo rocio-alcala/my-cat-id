@@ -168,13 +168,6 @@ export default function Form() {
           ></input>
         </>
       ) : null}
-      <input
-        className={styles.input}
-        type="file"
-        id="imagen"
-        name="imagen"
-        accept="image/*"
-      />
       <button className={styles.button} type="submit">
         Submit
       </button>

@@ -3,6 +3,8 @@ import styles from "../styles/card.module.css";
 import { Cat, Periodicity, Vaccine, getVaccinePeriodicity } from "@/types";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useState } from "react";
+import EditModal from "./EditModal";
 
 type CardProps = {
   cat: Cat;
@@ -30,12 +32,16 @@ function getAge(birth: string) {
   return age;
 }
 
+
+
 function Card({
   cat,
   fetchCat,
   setOpenSuccessDeleteCatModal,
   setOpenErrorDeletingCatModal,
 }: CardProps) {
+  const [editModal,setEditModal]=useState(false)
+
   async function handleDeleteCard(catId: string) {
     const URL = "/api/cats/" + catId;
     const options = {
@@ -108,9 +114,10 @@ function Card({
         )}
       </div>
       <div className={styles.cardItem}>
-        <button className={styles.button} type="button">
+        <button className={styles.button} onClick={()=>setEditModal(true)} type="button">
           Edit
         </button>
+        <EditModal cat={cat} open={editModal} setOpen={setEditModal} fetchCat={fetchCat}></EditModal>
         <IconButton
           onClick={() => {
             handleDeleteCard(cat.id);

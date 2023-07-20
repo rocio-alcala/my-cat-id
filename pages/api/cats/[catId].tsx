@@ -5,9 +5,9 @@ export default async function handlerAddCatForm(
   res: NextApiResponse
 ) {
   try {
+    const catId = req.query.catId;
     switch (req.method) {
       case "DELETE":
-        const catId = req.query.catId;
         const deleteOptions = { method: "DELETE" };
         const deleteCat = await fetch(
           "http://localhost:3001/cats/" + catId,
@@ -18,6 +18,24 @@ export default async function handlerAddCatForm(
         } else {
           console.error("@error deleting cat", deleteCat);
           throw new Error("Error deleting cat");
+        }
+      case "PUT":
+        const editOptions = {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(req.body),
+        };
+        const editCat = await fetch(
+          "http://localhost:3001/cats/" + catId,
+          editOptions
+        );
+        if (editCat.ok) {
+          res.status(200).json(editCat);
+        } else {
+          console.error("@error editing cat", editCat);
+          throw new Error("Error editing cat");
         }
     }
   } catch (err) {
