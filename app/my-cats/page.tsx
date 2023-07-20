@@ -20,10 +20,6 @@ export default function MyCat() {
     fetchCats();
   }, []);
 
-  const [openSuccessDeleteCatModal, setOpenSuccessDeleteCatModal] =
-    useState(false);
-  const [openErrorDeletingCatModal, setOpenErrorDeletingCatModal] =
-    useState(false);
 
   return (
     <div className={styles.cardcontainer}>
@@ -33,8 +29,6 @@ export default function MyCat() {
             fetchCat={fetchCats}
             cat={cat}
             key={cat.id}
-            setOpenSuccessDeleteCatModal={setOpenSuccessDeleteCatModal}
-            setOpenErrorDeletingCatModal={setOpenErrorDeletingCatModal}
           ></Card>
         ))
       ) : (
@@ -46,16 +40,6 @@ export default function MyCat() {
           </div>
         </div>
       )}
-      <Modal
-        open={openSuccessDeleteCatModal}
-        setOpen={setOpenSuccessDeleteCatModal}
-        content={"You successfully delete your cat"}
-      ></Modal>
-      <Modal
-        open={openErrorDeletingCatModal}
-        setOpen={setOpenErrorDeletingCatModal}
-        content={"There was a problem deleting your cat, try again"}
-      ></Modal>
     </div>
   );
 }

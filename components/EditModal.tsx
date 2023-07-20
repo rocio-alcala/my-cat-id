@@ -13,22 +13,31 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-import { parseUrl } from "next/dist/shared/lib/router/utils/parse-url";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-type ModalTypes = {
+function notification(content: string) {
+  toast.info(content);
+}
+
+type EditModalTypes = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   cat: Cat;
   fetchCat: () => void;
 };
 
-export default function EditModal({ open, setOpen, cat, fetchCat }: ModalTypes) {
+export default function EditModal({
+  open,
+  setOpen,
+  cat,
+  fetchCat,
+}: EditModalTypes) {
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
-    reset,
   } = useForm<Omit<Cat, "id">>({
     resolver: yupResolver(catFormSchema),
   });
@@ -37,12 +46,11 @@ export default function EditModal({ open, setOpen, cat, fetchCat }: ModalTypes) 
   const isVLFe = watch("VLFe");
   const isDewormed = watch("dewormed");
   const isRabies = watch("rabies");
-  const [openSubmitCatModal, setOpenSubmitCatModal] = useState(false);
-  const [openErrorCatModal, setOpenErrorCatModal] = useState(false);
+
 
   const onSubmit = (data: Omit<Cat, "id">) => {
     const JSONcatForm = JSON.stringify(data);
-    const URL = "/api/cats/" + cat.id
+    const URL = "/api/cats/" + cat.id;
     const options = {
       method: "PUT",
       headers: {
@@ -52,10 +60,10 @@ export default function EditModal({ open, setOpen, cat, fetchCat }: ModalTypes) 
     };
     fetch(URL, options).then((resp) => {
       if (resp.ok) {
-        fetchCat()
-        setOpenSubmitCatModal(true);
+        fetchCat();
+        notification("You successfully edit "+cat.name);
       } else {
-        setOpenErrorCatModal(true);
+        notification("There was a problem editing "+cat.name);
       }
     });
   };
@@ -69,7 +77,6 @@ export default function EditModal({ open, setOpen, cat, fetchCat }: ModalTypes) 
     >
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          {" "}
           <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
             <label className={styles.label} htmlFor="name">
               Name
@@ -212,16 +219,18 @@ export default function EditModal({ open, setOpen, cat, fetchCat }: ModalTypes) 
             <button className={styles.button} type="submit">
               Submit
             </button>
-            <Modal
-              open={openSubmitCatModal}
-              setOpen={setOpenSubmitCatModal}
-              content={"You successfully edit your cat"}
-            ></Modal>
-            <Modal
-              open={openErrorCatModal}
-              setOpen={setOpenErrorCatModal}
-              content={"There was a problem editing your cat, try again"}
-            ></Modal>
+            <ToastContainer
+              position="top-right"
+              autoClose={2000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
           </form>
         </DialogContentText>
       </DialogContent>

@@ -5,13 +5,18 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useState } from "react";
 import EditModal from "./EditModal";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 type CardProps = {
   cat: Cat;
   fetchCat: () => void;
-  setOpenSuccessDeleteCatModal: (isModalOpen: boolean) => void;
-  setOpenErrorDeletingCatModal: Function;
 };
+
+function notification(content: string) {
+  toast.info(content);
+}
 
 function getNextVaccineDate(vaccine: Vaccine, vaccineDate: string) {
   const periodicity = getVaccinePeriodicity(vaccine);
@@ -36,9 +41,7 @@ function getAge(birth: string) {
 
 function Card({
   cat,
-  fetchCat,
-  setOpenSuccessDeleteCatModal,
-  setOpenErrorDeletingCatModal,
+  fetchCat
 }: CardProps) {
   const [editModal,setEditModal]=useState(false)
 
@@ -49,9 +52,9 @@ function Card({
     };
     const deleteCard = await fetch(URL, options);
     if (deleteCard.ok) {
-      setOpenSuccessDeleteCatModal(true);
+      notification("You successfully delete "+cat.name);
     } else {
-      setOpenErrorDeletingCatModal(true);
+      notification("There was a problem deleting "+cat.name);
     }
     fetchCat();
   }
@@ -127,6 +130,18 @@ function Card({
         >
           <DeleteIcon />
         </IconButton>
+        <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       </div>
     </div>
   );
