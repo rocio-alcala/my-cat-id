@@ -6,8 +6,12 @@ import { Cat } from "@/types";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { catFormSchema } from "@/validations/newCatValidation";
-import { useState } from "react";
-import Modal from "./Modal";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+function notification(content: string) {
+  toast.info(content);
+}
 
 export default function Form() {
   const {
@@ -20,13 +24,10 @@ export default function Form() {
     resolver: yupResolver(catFormSchema),
   });
 
-  const name = watch("name");
   const isTripleFeline = watch("tripleFeline");
   const isVLFe = watch("VLFe");
   const isDewormed = watch("dewormed");
   const isRabies = watch("rabies");
-  const [openSubmitCatModal, setOpenSubmitCatModal] = useState(false);
-  const [openErrorCatModal, setOpenErrorCatModal] = useState(false);
 
   const onSubmit = (data: Omit<Cat, "id">) => {
     const JSONcatForm = JSON.stringify(data);
@@ -40,9 +41,9 @@ export default function Form() {
     fetch("/api/cats", options).then((resp) => {
       if (resp.ok) {
         reset();
-        setOpenSubmitCatModal(true);
+        notification("You added "+data.name+" to your cats");
       } else {
-        setOpenErrorCatModal(true);
+        notification("There was a problem adding "+data.name+", try again");
       }
     });
   };
@@ -168,26 +169,21 @@ export default function Form() {
           ></input>
         </>
       ) : null}
-      <input
-        className={styles.input}
-        type="file"
-        id="imagen"
-        name="imagen"
-        accept="image/*"
-      />
       <button className={styles.button} type="submit">
         Submit
       </button>
-      <Modal
-        open={openSubmitCatModal}
-        setOpen={setOpenSubmitCatModal}
-        content={"You added a new cat to your cats"}
-      ></Modal>
-      <Modal
-        open={openErrorCatModal}
-        setOpen={setOpenErrorCatModal}
-        content={"There was a problem adding your cat, try again"}
-      ></Modal>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </form>
   );
 }
