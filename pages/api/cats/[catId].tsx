@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+const DATABASE_URL = process.env.DATABASE_URL || "http://localhost:3001/cats/"
 
 export default async function handlerAddCatForm(
   req: NextApiRequest,
@@ -9,10 +10,7 @@ export default async function handlerAddCatForm(
     switch (req.method) {
       case "DELETE":
         const deleteOptions = { method: "DELETE" };
-        const deleteCat = await fetch(
-          "http://localhost:3001/cats/" + catId,
-          deleteOptions
-        );
+        const deleteCat = await fetch(DATABASE_URL + catId, deleteOptions);
         if (deleteCat.ok) {
           res.status(200).json(deleteCat);
         } else {
@@ -27,10 +25,7 @@ export default async function handlerAddCatForm(
           },
           body: JSON.stringify(req.body),
         };
-        const editCat = await fetch(
-          "http://localhost:3001/cats/" + catId,
-          editOptions
-        );
+        const editCat = await fetch(DATABASE_URL + catId, editOptions);
         if (editCat.ok) {
           res.status(200).json(editCat);
         } else {
