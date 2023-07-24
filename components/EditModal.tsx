@@ -20,7 +20,7 @@ function notification(content: string) {
   toast.info(content);
 }
 
-type EditModalTypes = {
+type EditModalProps = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   cat: Cat;
@@ -32,21 +32,21 @@ export default function EditModal({
   setOpen,
   cat,
   fetchCat,
-}: EditModalTypes) {
+}: EditModalProps) {
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<Omit<Cat, "id">>({
-    resolver: yupResolver(catFormSchema),
+  } = useForm<Cat>({
+    resolver: yupResolver(editCatFormSchema),
+    defaultValues: cat,
   });
 
   const isTripleFeline = watch("tripleFeline");
   const isVLFe = watch("VLFe");
   const isDewormed = watch("dewormed");
   const isRabies = watch("rabies");
-
 
   const onSubmit = (data: Omit<Cat, "id">) => {
     const JSONcatForm = JSON.stringify(data);

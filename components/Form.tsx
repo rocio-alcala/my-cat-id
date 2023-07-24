@@ -41,9 +41,9 @@ export default function Form() {
     fetch("/api/cats", options).then((resp) => {
       if (resp.ok) {
         reset();
-        notification("You added "+data.name+" to your cats");
+        notification(`You added ${data.name} to your cats`);
       } else {
-        notification("There was a problem adding "+data.name+", try again");
+        notification("There was a problem adding " + data.name + ", try again");
       }
     });
   };
