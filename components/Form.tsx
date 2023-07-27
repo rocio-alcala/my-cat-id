@@ -3,7 +3,7 @@
 import styles from "../styles/form.module.css";
 import { Switch, FormControlLabel } from "@mui/material";
 import { Cat } from "@/types";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { catFormSchema } from "@/validations/newCatValidation";
 import { ToastContainer, toast } from "react-toastify";
@@ -20,6 +20,7 @@ export default function Form() {
     formState: { errors },
     watch,
     reset,
+    control,
   } = useForm<Omit<Cat, "id">>({
     resolver: yupResolver(catFormSchema),
   });
@@ -89,17 +90,26 @@ export default function Form() {
         id="birth"
         {...register("birth")}
       ></input>
-      <FormControlLabel
-        className={styles.label}
-        control={
-          <Switch //el switch no se resetea cuando envio el form
-            id="tripleFeline"
-            color="warning"
-            {...register("tripleFeline")}
+      <Controller
+        control={control}
+        {...register("tripleFeline")}
+        defaultValue={false}
+        render={({ field }) => (
+          <FormControlLabel
+            className={styles.label}
+            control={
+              <Switch
+                id="tripleFeline"
+                color="warning"
+                {...field}
+                checked={field.value}
+              />
+            }
+            label="Triple feline vaccine"
           />
-        }
-        label="Triple filene vaccine"
+        )}
       />
+
       {isTripleFeline ? (
         <>
           <label className={styles.label} htmlFor="tripleFelineDate">
@@ -113,10 +123,24 @@ export default function Form() {
           ></input>
         </>
       ) : null}
-      <FormControlLabel
-        className={styles.label}
-        control={<Switch id="rabies" color="warning" {...register("rabies")} />}
-        label="Rabies vaccine"
+      <Controller
+        control={control}
+        defaultValue={false}
+        {...register("rabies")}
+        render={({ field }) => (
+          <FormControlLabel
+            className={styles.label}
+            control={
+              <Switch
+                id="rabies"
+                color="warning"
+                {...field}
+                checked={field.value}
+              />
+            }
+            label="Rabies vaccine"
+          />
+        )}
       />
       {isRabies ? (
         <>
@@ -131,10 +155,24 @@ export default function Form() {
           ></input>
         </>
       ) : null}
-      <FormControlLabel
-        className={styles.label}
-        control={<Switch id="VLFe" color="warning" {...register("VLFe")} />}
-        label="VLFe vaccine"
+      <Controller
+        control={control}
+        defaultValue={false}
+        {...register("VLFe")}
+        render={({ field }) => (
+          <FormControlLabel
+            className={styles.label}
+            control={
+              <Switch
+                id="VLFe"
+                color="warning"
+                {...field}
+                checked={field.value}
+              />
+            }
+            label="VLFe vaccine"
+          />
+        )}
       />
       {isVLFe ? (
         <>
@@ -149,12 +187,24 @@ export default function Form() {
           ></input>
         </>
       ) : null}
-      <FormControlLabel
-        className={styles.label}
-        control={
-          <Switch id="dewormed" color="warning" {...register("dewormed")} />
-        }
-        label="Dewormed"
+      <Controller
+        control={control}
+        defaultValue={false}
+        {...register("dewormed")}
+        render={({ field }) => (
+          <FormControlLabel
+            className={styles.label}
+            control={
+              <Switch
+                id="dewormed"
+                color="warning"
+                {...field}
+                checked={field.value}
+              />
+            }
+            label="Dewormed"
+          />
+        )}
       />
       {isDewormed ? (
         <>
