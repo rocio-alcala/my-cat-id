@@ -3,16 +3,13 @@
 import styles from "../styles/form.module.css";
 import { Switch, FormControlLabel } from "@mui/material";
 import { Cat } from "@/types";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { catFormSchema } from "@/validations/newCatValidation";
-import { useState } from "react";
-import Modal from "./Modal";
+import { editCatFormSchema } from "@/validations/editCatValidation";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -38,6 +35,7 @@ export default function EditModal({
     handleSubmit,
     formState: { errors },
     watch,
+    control,
   } = useForm<Cat>({
     resolver: yupResolver(editCatFormSchema),
     defaultValues: cat,
@@ -61,29 +59,28 @@ export default function EditModal({
     fetch(URL, options).then((resp) => {
       if (resp.ok) {
         fetchCat();
-        notification("You successfully edit "+cat.name);
+        notification("You successfully edit " + cat.name);
       } else {
-        notification("There was a problem editing "+cat.name);
+        notification("There was a problem editing " + cat.name);
       }
     });
   };
 
   return (
-    <Dialog
-      open={open}
-      onClose={() => setOpen(false)}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogContent>
-        <DialogContentText id="alert-dialog-description">
+    <>
+      <Dialog
+        open={open}
+        onClose={() => setOpen(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
           <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
             <label className={styles.label} htmlFor="name">
               Name
             </label>
             <input
               className={styles.input}
-              defaultValue={cat.name}
               type="text"
               id="name"
               placeholder="Your cat name"
@@ -97,7 +94,6 @@ export default function EditModal({
             </label>
             <input
               className={styles.input}
-              defaultValue={cat.color}
               placeholder="What color is your cat"
               type="text"
               id="color"
@@ -109,12 +105,7 @@ export default function EditModal({
             <label className={styles.label} htmlFor="sex">
               Sex
             </label>
-            <select
-              className={styles.input}
-              id="sex"
-              {...register("sex")}
-              defaultValue={cat.sex}
-            >
+            <select className={styles.input} id="sex" {...register("sex")}>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
             </select>
@@ -128,16 +119,24 @@ export default function EditModal({
               id="birth"
               {...register("birth")}
             ></input>
-            <FormControlLabel
-              className={styles.label}
-              control={
-                <Switch //el switch no se resetea cuando envio el form
-                  id="tripleFeline"
-                  color="warning"
-                  {...register("tripleFeline")}
+            <Controller
+              control={control}
+              {...register("tripleFeline")}
+              defaultValue={false}
+              render={({ field }) => (
+                <FormControlLabel
+                  className={styles.label}
+                  control={
+                    <Switch
+                      id="tripleFeline"
+                      color="warning"
+                      {...field}
+                      checked={field.value}
+                    />
+                  }
+                  label="Triple feline vaccine"
                 />
-              }
-              label="Triple filene vaccine"
+              )}
             />
             {isTripleFeline ? (
               <>
@@ -152,12 +151,24 @@ export default function EditModal({
                 ></input>
               </>
             ) : null}
-            <FormControlLabel
-              className={styles.label}
-              control={
-                <Switch id="rabies" color="warning" {...register("rabies")} />
-              }
-              label="Rabies vaccine"
+            <Controller
+              control={control}
+              defaultValue={false}
+              {...register("rabies")}
+              render={({ field }) => (
+                <FormControlLabel
+                  className={styles.label}
+                  control={
+                    <Switch
+                      id="rabies"
+                      color="warning"
+                      {...field}
+                      checked={field.value}
+                    />
+                  }
+                  label="Rabies vaccine"
+                />
+              )}
             />
             {isRabies ? (
               <>
@@ -172,12 +183,24 @@ export default function EditModal({
                 ></input>
               </>
             ) : null}
-            <FormControlLabel
-              className={styles.label}
-              control={
-                <Switch id="VLFe" color="warning" {...register("VLFe")} />
-              }
-              label="VLFe vaccine"
+            <Controller
+              control={control}
+              defaultValue={false}
+              {...register("VLFe")}
+              render={({ field }) => (
+                <FormControlLabel
+                  className={styles.label}
+                  control={
+                    <Switch
+                      id="VLFe"
+                      color="warning"
+                      {...field}
+                      checked={field.value}
+                    />
+                  }
+                  label="VLFe vaccine"
+                />
+              )}
             />
             {isVLFe ? (
               <>
@@ -192,16 +215,24 @@ export default function EditModal({
                 ></input>
               </>
             ) : null}
-            <FormControlLabel
-              className={styles.label}
-              control={
-                <Switch
-                  id="dewormed"
-                  color="warning"
-                  {...register("dewormed")}
+            <Controller
+              control={control}
+              defaultValue={false}
+              {...register("dewormed")}
+              render={({ field }) => (
+                <FormControlLabel
+                  className={styles.label}
+                  control={
+                    <Switch
+                      id="dewormed"
+                      color="warning"
+                      {...field}
+                      checked={field.value}
+                    />
+                  }
+                  label="Dewormed"
                 />
-              }
-              label="Dewormed"
+              )}
             />
             {isDewormed ? (
               <>
@@ -219,24 +250,24 @@ export default function EditModal({
             <button className={styles.button} type="submit">
               Submit
             </button>
-            <ToastContainer
-              position="top-right"
-              autoClose={2000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-            />
           </form>
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={() => setOpen(false)}>Close</Button>
-      </DialogActions>
-    </Dialog>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpen(false)}>Close</Button>
+        </DialogActions>
+      </Dialog>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+    </>
   );
 }

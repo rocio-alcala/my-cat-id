@@ -14,7 +14,6 @@ export default async function handlerAddCatForm(
         if (deleteCat.ok) {
           res.status(200).json(deleteCat);
         } else {
-          console.error("@error deleting cat", deleteCat);
           throw new Error("Error deleting cat");
         }
       case "PUT":
@@ -29,12 +28,10 @@ export default async function handlerAddCatForm(
         if (editCat.ok) {
           res.status(200).json(editCat);
         } else {
-          console.error("@error editing cat", editCat);
           throw new Error("Error editing cat");
         }
     }
   } catch (err) {
-    console.error("@error cat api", err);
     res.status(500).json(err);
   }
 }

@@ -13,7 +13,6 @@ export default async function handlerAddCatForm(
     switch (req.method) {
       case "POST":
         const newCat = { ...req.body, id: v4() };
-        console.log("@env",process.env.DATABASE_URL)
         const postOptions = {
           method: "POST",
           headers: {
