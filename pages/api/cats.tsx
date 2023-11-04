@@ -1,7 +1,7 @@
-import { NextApiRequest, NextApiResponse } from "next";
+/* import { NextApiRequest, NextApiResponse } from "next";
 import { v4 } from "uuid";
 
-const DATABASE_URL = process.env.DATABASE_URL || "http://localhost:3001/cats/"
+const DATABASE_URL = process.env.DATABASE_URL || "https://mycat-fff1c-default-rtdb.firebaseio.com/cats.json"
 
 //para proxima clase errores
 
@@ -42,3 +42,4 @@ export default async function handlerAddCatForm(
     res.status(500).json(err);
   }
 }
+ */

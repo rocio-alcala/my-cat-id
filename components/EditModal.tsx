@@ -48,7 +48,7 @@ export default function EditModal({
 
   const onSubmit = (data: Omit<Cat, "id">) => {
     const JSONcatForm = JSON.stringify(data);
-    const URL = "/api/cats/" + cat.id;
+    const URL = `https://mycat-fff1c-default-rtdb.firebaseio.com/cats/${cat.id}.json`;
     const options = {
       method: "PUT",
       headers: {

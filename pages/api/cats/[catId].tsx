@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from "next";
+/* import { NextApiRequest, NextApiResponse } from "next";
 const DATABASE_URL = process.env.DATABASE_URL || "http://localhost:3001/cats/"
 
 export default async function handlerAddCatForm(
@@ -35,3 +35,4 @@ export default async function handlerAddCatForm(
     res.status(500).json(err);
   }
 }
+ */

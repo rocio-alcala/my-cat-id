@@ -39,7 +39,7 @@ export default function Form() {
       },
       body: JSONcatForm,
     };
-    fetch("/api/cats", options).then((resp) => {
+    fetch("https://mycat-fff1c-default-rtdb.firebaseio.com/cats.json", options).then((resp) => {
       if (resp.ok) {
         reset();
         notification(`You added ${data.name} to your cats`);
