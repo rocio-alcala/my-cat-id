@@ -1,5 +1,7 @@
-import { NextApiRequest, NextApiResponse } from "next";
+/* import { NextApiRequest, NextApiResponse } from "next";
 import { v4 } from "uuid";
+
+const DATABASE_URL = process.env.DATABASE_URL || "https://mycat-fff1c-default-rtdb.firebaseio.com/cats.json"
 
 //para proxima clase errores
 
@@ -11,7 +13,6 @@ export default async function handlerAddCatForm(
     switch (req.method) {
       case "POST":
         const newCat = { ...req.body, id: v4() };
-
         const postOptions = {
           method: "POST",
           headers: {
@@ -19,7 +20,7 @@ export default async function handlerAddCatForm(
           },
           body: JSON.stringify(newCat),
         };
-        const response = await fetch("http://localhost:3001/cats", postOptions);
+        const response = await fetch(DATABASE_URL, postOptions);
 
         if (response.ok) {
           res.status(200).json({ data: req.body });
@@ -28,7 +29,7 @@ export default async function handlerAddCatForm(
         }
         break;
       case "GET":
-        const jsonCats = await fetch("http://localhost:3001/cats");
+        const jsonCats = await fetch(DATABASE_URL);
         const cats = await jsonCats.json();
         if (jsonCats.ok) {
           res.status(200).json(cats);
@@ -41,3 +42,4 @@ export default async function handlerAddCatForm(
     res.status(500).json(err);
   }
 }
+ */

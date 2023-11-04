@@ -8,7 +8,6 @@ import EditModal from "./EditModal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 type CardProps = {
   cat: Cat;
   fetchCat: () => void;
@@ -37,24 +36,19 @@ function getAge(birth: string) {
   return age;
 }
 
-
-
-function Card({
-  cat,
-  fetchCat
-}: CardProps) {
-  const [editModal,setEditModal]=useState(false)
+function Card({ cat, fetchCat }: CardProps) {
+  const [editModal, setEditModal] = useState(false);
 
   async function handleDeleteCard(catId: string) {
-    const URL = "/api/cats/" + catId;
+    const URL = `https://mycat-fff1c-default-rtdb.firebaseio.com/cats/${catId}.json`;
     const options = {
       method: "DELETE",
     };
     const deleteCard = await fetch(URL, options);
     if (deleteCard.ok) {
-      notification("You successfully delete "+cat.name);
+      notification("You successfully delete " + cat.name);
     } else {
-      notification("There was a problem deleting "+cat.name);
+      notification("There was a problem deleting " + cat.name);
     }
     fetchCat();
   }
@@ -117,10 +111,19 @@ function Card({
         )}
       </div>
       <div className={styles.cardItem}>
-        <button className={styles.button} onClick={()=>setEditModal(true)} type="button">
+        <button
+          className={styles.button}
+          onClick={() => setEditModal(true)}
+          type="button"
+        >
           Edit
         </button>
-        <EditModal cat={cat} open={editModal} setOpen={setEditModal} fetchCat={fetchCat}></EditModal>
+        <EditModal
+          cat={cat}
+          open={editModal}
+          setOpen={setEditModal}
+          fetchCat={fetchCat}
+        ></EditModal>
         <IconButton
           onClick={() => {
             handleDeleteCard(cat.id);
@@ -131,17 +134,17 @@ function Card({
           <DeleteIcon />
         </IconButton>
         <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+          position="top-right"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </div>
     </div>
   );

@@ -1,3 +1,45 @@
 {
-  "cats": []
+  "cats": [
+    {
+      "name": "Simon",
+      "color": "Blanco y negro",
+      "sex": "Female",
+      "birth": "2023-07-01",
+      "rabies": true,
+      "VLFe": true,
+      "dewormed": true,
+      "tripleFelineDate": "2023-06-30",
+      "id": "bbc39765-8f39-4c53-819a-6e958c953d01",
+      "tripleFeline": true,
+      "rabiesDate": "2023-07-13",
+      "VLFeDate": "2023-07-14",
+      "dewormedDate": "2023-06-30"
+    },
+    {
+      "name": "Rocio Alcala",
+      "color": "Blanco y negro",
+      "sex": "Male",
+      "birth": "",
+      "rabies": false,
+      "VLFe": false,
+      "dewormed": false,
+      "tripleFeline": true,
+      "tripleFelineDate": "2023-07-07",
+      "id": "7bb5bab0-06da-4716-af06-48942ce5949c"
+    },
+    {
+      "name": "Rocio Alcala",
+      "color": "Blanco y negro",
+      "sex": "Male",
+      "birth": "",
+      "rabies": false,
+      "VLFe": true,
+      "dewormed": true,
+      "tripleFeline": true,
+      "tripleFelineDate": "2023-07-15",
+      "id": "200dbff9-4257-4621-9f85-622d8bb7967b",
+      "dewormedDate": "2023-07-14",
+      "VLFeDate": ""
+    }
+  ]
 }
