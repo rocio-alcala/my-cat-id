@@ -18,7 +18,7 @@ export default function MyCat() {
       "https://mycat-fff1c-default-rtdb.firebaseio.com/cats.json"
     );
     const myCats: ApiCats = await jsonCats.json(); //la api devuelve un objeto con el id de key de cada gato
-console.log(myCats)
+    //por eso transformo el objeto en la estructura de array corespondiente para poder iterarlo en un map
     function transformMyCatsToArray(myCats: ApiCats) {
       let myCatInArray: Cat[] = [];
       Object.entries(myCats).forEach((cat) => {
