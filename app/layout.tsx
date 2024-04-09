@@ -13,25 +13,28 @@ const inter = Inter({ subsets: ["latin"] });
 
 const metadata = {
   title: "My cat id",
-  description: "The app for your cat info inline",
+  description: "The app for your cat info inline"
 };
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#000",
-    },
-  },
+      main: "#000"
+    }
+  }
 });
 
 export default function RootLayout({
-  children,
+  children
 }: {
   children: React.ReactNode;
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body
+        style={{ minHeight: "100vh", margin: 0 }}
+        className={inter.className}
+      >
         <nav>
           <ThemeProvider theme={theme}>
             <Stack direction="row" spacing={2}>
@@ -58,7 +61,7 @@ export default function RootLayout({
         </nav>
         <main>{children}</main>
         <footer>
-          <p className="copyright">Copyright @roalcala 2023</p>
+          <p className="copyright">Hecho con ♥ por @roalcala 2022</p>
           <ThemeProvider theme={theme}>
             <div className="socials">
               <a href="https://www.instagram.com/">
